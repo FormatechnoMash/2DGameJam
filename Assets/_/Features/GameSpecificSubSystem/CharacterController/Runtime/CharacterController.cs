@@ -12,12 +12,17 @@ namespace CharacterController.Runtime
            // _renderer = GetComponent<SpriteRenderer>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             if(_rigidbody2D == null) throw new MissingComponentException("Rigidbody2D not found");
+            _jetPackForce = 0.01f;
+            _jetPackSpeed = 3;
+            _maxUpwardSpeed = 8f;
+            _maxJetPackTime = 5;
+
         }
 
         // Update is called once per frame
         void Update()
         {
-           ;
+           
                 
             if (Input.GetKey(KeyCode.A))
             {
@@ -37,6 +42,13 @@ namespace CharacterController.Runtime
             {
                 jump();
             }
+
+            if (Input.GetKey(KeyCode.Space) && _compteurJump ==1)
+                
+            {
+                JetPack();
+            }
+            
         }
 
         private void OnCollisionStay2D(Collision2D other)
@@ -44,8 +56,19 @@ namespace CharacterController.Runtime
             if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 _compteurJump = 0;
+                if (_actualJetPackTime > 0)
+                {
+                    _actualJetPackTime-=Time.deltaTime*2;
+                }
+
+                if (_actualJetPackTime < 0)
+                {
+                    _actualJetPackTime=0;
+                }
+                
             }
         }
+        
 
         #endregion
 
@@ -76,15 +99,32 @@ namespace CharacterController.Runtime
         {
             _compteurJump++;
             _rigidbody2D.AddForce(new Vector2( 0f, _jumpForce), ForceMode2D.Impulse);
+            
             //_animator.SetTrigger("Roll");
         }
-        // public Vector3 GetMousePosition()
-        // {
-        //     Vector3 mousePosition = Input.mousePosition;
-        //     Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        //     mouseWorldPosition.z = 0;
-        //     return ;
-        // }
+
+        public void JetPack()
+        {
+            if (_actualJetPackTime < _maxJetPackTime)
+            {
+                _actualJetPackTime += Time.deltaTime;
+                
+                float fallSpeed = Mathf.Clamp(-_rigidbody2D.linearVelocity.y, 0f, 5f);
+                float dynamicBoost = Mathf.Lerp(0f, _jetPackForce, fallSpeed / 5f);
+                
+                _rigidbody2D.AddForce(new Vector2(0f, (dynamicBoost + _jetPackForce) * _jetPackSpeed), ForceMode2D.Impulse);
+                
+                if (_rigidbody2D.linearVelocity.y > _maxUpwardSpeed)
+                {
+                    _rigidbody2D.linearVelocity = new Vector2(_rigidbody2D.linearVelocity.x, _maxUpwardSpeed);
+                }
+            }
+            if (_actualJetPackTime > _maxJetPackTime)
+            {
+                _actualJetPackTime = _maxJetPackTime;
+            }
+            
+        }
         #endregion
         
         
@@ -94,8 +134,14 @@ namespace CharacterController.Runtime
         private Rigidbody2D _rigidbody2D;
         [SerializeField] private float _speed=0;
         [SerializeField] private float _jumpForce=0;
+        private float _actualJetPackTime=0;
+        [SerializeField] private float _maxJetPackTime;
+        [SerializeField] private float _jetPackForce;
+        [SerializeField] private float _jetPackSpeed;
         private int _compteurJump = 0;
-      
+        [SerializeField] private float _maxUpwardSpeed;
+
+
 
         #endregion
     }

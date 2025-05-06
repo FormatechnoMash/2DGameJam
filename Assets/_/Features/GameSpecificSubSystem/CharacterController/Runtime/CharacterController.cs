@@ -1,4 +1,8 @@
+using Projectile.Runtime;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 namespace CharacterController.Runtime
 {
@@ -16,6 +20,7 @@ namespace CharacterController.Runtime
             _jetPackSpeed = 3;
             _maxUpwardSpeed = 8f;
             _maxJetPackTime = 5;
+            _maxPistolCharge = 7;
 
         }
 
@@ -48,7 +53,33 @@ namespace CharacterController.Runtime
             {
                 JetPack();
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                
+                if (_actualPistolCharge <= _maxPistolCharge-1.5f && _lastTimeShot==0)
+                {
+                   ShootPistol(); 
+                }
+
+               
+                
+            }
+            if (_lastTimeShot <= 0)
+            {
+                _lastTimeShot = 0;
+                _actualPistolCharge -= Time.deltaTime*4;
+            }
+             if (_lastTimeShot > 0)
+             {
+                 _lastTimeShot -= Time.deltaTime;
+            }
+
+             if (_actualPistolCharge <= 0)
+             {
+                 _actualPistolCharge = 0;
+             }
+                 
         }
 
         private void OnCollisionStay2D(Collision2D other)
@@ -78,13 +109,15 @@ namespace CharacterController.Runtime
         public void Left()
         {
             _rigidbody2D.linearVelocity = new Vector2(-_speed, _rigidbody2D.linearVelocity.y);
+            _isFacingRight = false;
             //_renderer.flipX = true;
             //_animator.SetBool("IsRunning", true);
-            
+
         }
         public void Right()
         {
             _rigidbody2D.linearVelocity = new Vector2(_speed, _rigidbody2D.linearVelocity.y);
+            _isFacingRight = true;
             //_renderer.flipX = false;
             //_animator.SetBool("IsRunning", true);
             
@@ -125,6 +158,34 @@ namespace CharacterController.Runtime
             }
             
         }
+
+        public void ShootPistol()
+        {
+            
+            GameObject bullet = ObjectPool.instance.GetPooledObject();
+            if (bullet != null)
+            {
+                if (_isFacingRight == true)
+                {
+                    bullet.transform.position = _muzzleRight.transform.position;
+                    bullet.SetActive(true);
+                }
+                else if (_isFacingRight == false)
+                {
+                    bullet.transform.position = _muzzleLeft.transform.position;
+                    bullet.SetActive(true);
+                }
+                BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+                if (bulletScript != null)
+                {
+                    bulletScript.Launch(_isFacingRight);
+                }
+                
+                _actualPistolCharge += 1.5f;
+                _lastTimeShot = 0.2f;
+
+            }
+        }
         #endregion
         
         
@@ -140,6 +201,14 @@ namespace CharacterController.Runtime
         [SerializeField] private float _jetPackSpeed;
         private int _compteurJump = 0;
         [SerializeField] private float _maxUpwardSpeed;
+        [FormerlySerializedAs("_muzzle")] [SerializeField] private GameObject _muzzleRight;
+        [SerializeField] private GameObject _muzzleLeft;
+        private bool _isFacingRight = true;
+        [SerializeField]private float _maxPistolCharge;
+        private float _actualPistolCharge;
+        private float _pistolChargeDecreasing;
+        private float _lastTimeShot;
+
 
 
 

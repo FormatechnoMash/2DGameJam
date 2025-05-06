@@ -1,9 +1,7 @@
 {
-    "name": "CharacterController.Runtime",
-    "rootNamespace": "CharacterController.Runtime",
-    "references": [
-        "GUID:bb73b55bff935b147996a43dfbf3f3d1"
-    ],
+    "name": "Projectile.Runtime",
+    "rootNamespace": "Projectile.Runtime",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

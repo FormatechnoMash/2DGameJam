@@ -15,7 +15,7 @@ namespace CharacterController.Runtime
         void Awake()
         {
            // _animator = GetComponent<Animator>();
-           // _renderer = GetComponent<SpriteRenderer>();
+            _renderer = GetComponent<SpriteRenderer>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             if(_rigidbody2D == null) throw new MissingComponentException("Rigidbody2D not found");
             _jetPackForce = 0.01f;
@@ -149,20 +149,22 @@ namespace CharacterController.Runtime
         {
             // Déplace à gauche
             _rigidbody2D.linearVelocity = new Vector2(-Mathf.Abs(_speed), _rigidbody2D.linearVelocity.y);
+            _renderer.flipX = true;
 
            
             _isFacingRight = false;
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         }                                     
 
         public void Right()
         {
             // Déplace à droite
             _rigidbody2D.linearVelocity = new Vector2(Mathf.Abs(_speed), _rigidbody2D.linearVelocity.y);
+            _renderer.flipX = false;
 
-            
+
             _isFacingRight = true;
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f); // Rotation normale
+            //transform.rotation = Quaternion.Euler(0f, 0f, 0f); // Rotation normale
             
 
         }

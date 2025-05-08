@@ -27,9 +27,18 @@ namespace Projectile.Runtime
             _rb.linearVelocity = direction * _speed ;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collision.gameObject.CompareTag("Ennemy"))
+            
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Ennemy") )
+            {
+                TurretHp controller = collider.gameObject.GetComponent<TurretHp>();
+                controller.TurretDeath();
+                gameObject.SetActive(false);
+                
+            }
+
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 gameObject.SetActive(false);
             }

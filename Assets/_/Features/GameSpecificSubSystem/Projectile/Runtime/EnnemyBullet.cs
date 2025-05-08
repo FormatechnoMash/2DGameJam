@@ -26,18 +26,18 @@ namespace Projectile.Runtime
         public void Launch(Vector3 targetposition)
         {
             Vector2 direction = ((Vector2)(targetposition - transform.position)).normalized;
-            _rb.velocity = direction * _speed;
+            _rb.linearVelocity = direction * _speed;
 
             bool isRight = targetposition.x > transform.position.x;
 
-            // Orienter le sprite
+            
             transform.localScale = new Vector3(
                 isRight ? Mathf.Abs(transform.localScale.x) : -Mathf.Abs(transform.localScale.x),
                 transform.localScale.y,
                 transform.localScale.z
             );
 
-            // Forcer l’orientation du système de particules
+          
             if (_particleSystem != null)
             {
                 _particleSystem.transform.localRotation = Quaternion.Euler(0, isRight ? 0 : 180, 0);

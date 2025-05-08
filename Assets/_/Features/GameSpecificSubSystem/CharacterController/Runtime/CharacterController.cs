@@ -147,19 +147,24 @@ namespace CharacterController.Runtime
         }
         public void Left()
         {
-            _rigidbody2D.linearVelocity = new Vector2(-_speed, _rigidbody2D.linearVelocity.y);
-            _isFacingRight = false;
-            //_renderer.flipX = true;
-            //_animator.SetBool("IsRunning", true);
+            // Déplace à gauche
+            _rigidbody2D.linearVelocity = new Vector2(-Mathf.Abs(_speed), _rigidbody2D.linearVelocity.y);
 
-        }
+           
+            _isFacingRight = false;
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }                                     
+
         public void Right()
         {
-            _rigidbody2D.linearVelocity = new Vector2(_speed, _rigidbody2D.linearVelocity.y);
-            _isFacingRight = true;
-            //_renderer.flipX = false;
-            //_animator.SetBool("IsRunning", true);
+            // Déplace à droite
+            _rigidbody2D.linearVelocity = new Vector2(Mathf.Abs(_speed), _rigidbody2D.linearVelocity.y);
+
             
+            _isFacingRight = true;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f); // Rotation normale
+            
+
         }
         public void StopRunning()
         {
@@ -303,6 +308,7 @@ namespace CharacterController.Runtime
         [SerializeField] private Button quitButton;
         [FormerlySerializedAs("_animationJettpack")] [SerializeField] private GameObject _animationJettpackLeft;
         [SerializeField] private GameObject _animationJettpackRight;
+
 
         #endregion
     }

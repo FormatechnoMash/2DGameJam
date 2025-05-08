@@ -2,7 +2,9 @@ using Projectile.Runtime;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace CharacterController.Runtime
 {
@@ -21,65 +23,79 @@ namespace CharacterController.Runtime
             _maxUpwardSpeed = 8f;
             _maxJetPackTime = 5;
             _maxPistolCharge = 7;
-
+            _healthPoints = 5; 
+            _jetpackSlider.maxValue = _maxJetPackTime;
+            _pistolSlider.maxValue = _maxPistolCharge;
+            _deathCanvas.SetActive(false);
+            retryButton.onClick.AddListener(TryAgain);
+            quitButton.onClick.AddListener(Quit);
         }
 
         // Update is called once per frame
         void Update()
         {
            
-                
-            if (Input.GetKey(KeyCode.A))
+            if(IsAlive==true)
             {
-                Left();
-            } 
-            else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-            {
-                StopRunning();
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                Right();
-            }
-
-
-            if (Input.GetKeyDown(KeyCode.Space)&& _compteurJump ==0 )
-            {
-                jump();
-            }
-
-            if (Input.GetKey(KeyCode.Space) && _compteurJump ==1)
-                
-            {
-                JetPack();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                
-                if (_actualPistolCharge <= _maxPistolCharge-1.5f && _lastTimeShot==0)
+                if (Input.GetKey(KeyCode.A))
                 {
-                   ShootPistol(); 
+                    Left();
+                } 
+                else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+                {
+                    StopRunning();
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    Right();
                 }
 
-               
-                
-            }
-            if (_lastTimeShot <= 0)
-            {
-                _lastTimeShot = 0;
-                _actualPistolCharge -= Time.deltaTime*4;
-            }
-             if (_lastTimeShot > 0)
-             {
-                 _lastTimeShot -= Time.deltaTime;
-            }
 
-             if (_actualPistolCharge <= 0)
-             {
-                 _actualPistolCharge = 0;
-             }
-                 
+                if (Input.GetKeyDown(KeyCode.Space)&& _compteurJump ==0 )
+                {
+                    jump();
+                }
+
+                if (Input.GetKey(KeyCode.Space) && _compteurJump ==1)
+                    
+                {
+                    JetPack();
+                }
+
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    
+                    if (_actualPistolCharge <= _maxPistolCharge-1.5f && _lastTimeShot==0)
+                    {
+                       ShootPistol(); 
+                    }
+                    
+                }
+                if (_lastTimeShot <= 0)
+                {
+                    _lastTimeShot = 0;
+                    _actualPistolCharge -= Time.deltaTime*4;
+                }
+                 if (_lastTimeShot > 0)
+                 {
+                     _lastTimeShot -= Time.deltaTime;
+                }
+
+                 if (_actualPistolCharge <= 0)
+                 {
+                     _actualPistolCharge = 0;
+                 }
+                 _jetpackSlider.value = _actualJetPackTime;
+                 _pistolSlider.value = _actualPistolCharge;
+                 if (transform.position.y <= -10)
+                 {
+                     DecreaseHealthpoint();
+                 }
+                }
+            else
+            {
+                EndGame();
+            }
         }
 
         private void OnCollisionStay2D(Collision2D other)
@@ -106,6 +122,24 @@ namespace CharacterController.Runtime
 
         #region utils
 
+
+        public void EndGame()
+        {
+            _deathCanvas.SetActive(true);
+            Time.timeScale = 0f;
+        }
+
+        public void TryAgain()
+        {
+            Time.timeScale = 1f; 
+            IsAlive = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
         public void Left()
         {
             _rigidbody2D.linearVelocity = new Vector2(-_speed, _rigidbody2D.linearVelocity.y);
@@ -161,7 +195,23 @@ namespace CharacterController.Runtime
 
         public void ShootPistol()
         {
-            
+           /*⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣶⣦⡄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⢀⣀⣀⣀⡀⢀⠀⢹⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠙⠻⣿⣿⣷⣄⠨⣿⣿⣿⡌⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣷⣿⣿⣿⣿⣿⣶⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⣠⣴⣾⣿⣮⣝⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠈⠉⠙⠻⢿⣿⣿⣿⣿⣿⣿⠟⣹⣿⡿⢿⣿⣿⣬⣶⣶⡶⠦⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⣀⣢⣙⣻⢿⣿⣿⣿⠎⢸⣿⠕⢹⣿⣿⡿⣛⣥⣀⣀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠈⠉⠛⠿⡏⣿⡏⠿⢄⣜⣡⠞⠛⡽⣸⡿⣟⡋⠉⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠾⠿⣿⠁⠀⡄⠀⠀⠰⠾⠿⠛⠓⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠠⢐⢉⢷⣀⠛⠠⠐⠐⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⣀⣠⣴⣶⣿⣧⣾⠡⠼⠎⢎⣋⡄⠆⠀⠱⡄⢉⠃⣦⡤⡀⠀⠀⠀⠀
+            ⠀⠀⠐⠙⠻⢿⣿⣿⣿⣿⣿⣿⣄⡀⠀⢩⠀⢀⠠⠂⢀⡌⠀⣿⡇⠟⠀⠀⢄⠀
+            ⠀⣴⣇⠀⡇⠀⠸⣿⣿⣿⣿⣽⣟⣲⡤⠀⣀⣠⣴⡾⠟⠀⠀⠟⠀⠀⠀⠀⡰⡀
+            ⣼⣿⠋⢀⣇⢸⡄⢻⣟⠻⣿⣿⣿⣿⣿⣿⠿⡿⠟⢁⠀⠀⠀⠀⠀⢰⠀⣠⠀⠰
+            ⢸⣿⡣⣜⣿⣼⣿⣄⠻⡄⡀⠉⠛⠿⠿⠛⣉⡤⠖⣡⣶⠁⠀⠀⠀⣾⣶⣿⠐⡀
+            ⣾⡇⠈⠛⠛⠿⣿⣿⣦⠁⠘⢷⣶⣶⡶⠟⢋⣠⣾⡿⠃⠀⠀⠀⠰⠛⠉⠉⠀⠀*/
+           
             GameObject bullet = ObjectPool.instance.GetPooledObject();
             if (bullet != null)
             {
@@ -186,6 +236,24 @@ namespace CharacterController.Runtime
 
             }
         }
+
+        public void DecreaseHealthpoint()
+        {
+            _healthPoints--;
+            if (transform.position.y <= -10)
+            {
+                _healthPoints = 0;
+            }
+            if (_healthPoints <= 0)
+            {
+                IsAlive = false;
+            }
+        }
+
+        public void IncreaseHealthpoint()
+        {
+            _healthPoints++;
+        }
         #endregion
         
         
@@ -208,8 +276,13 @@ namespace CharacterController.Runtime
         private float _actualPistolCharge;
         private float _pistolChargeDecreasing;
         private float _lastTimeShot;
-
-
+        private int _healthPoints;
+        [SerializeField] private UnityEngine.UI.Slider _jetpackSlider;
+        [SerializeField] private UnityEngine.UI.Slider _pistolSlider;
+        private bool IsAlive = true;
+        [SerializeField] private GameObject _deathCanvas;
+        [SerializeField] private Button retryButton;
+        [SerializeField] private Button quitButton;
 
 
         #endregion

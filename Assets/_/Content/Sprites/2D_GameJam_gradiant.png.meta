@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      2D_GameJam_gradiant_0: -6160107585473634921
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -29,6 +29,7 @@ namespace CharacterController.Runtime
             _deathCanvas.SetActive(false);
             retryButton.onClick.AddListener(TryAgain);
             quitButton.onClick.AddListener(Quit);
+            
         }
 
         // Update is called once per frame
@@ -61,7 +62,11 @@ namespace CharacterController.Runtime
                 {
                     JetPack();
                 }
-
+                else
+                {
+                    _animationJettpackLeft.SetActive(false);
+                    _animationJettpackRight.SetActive(false);
+                }
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     
@@ -184,7 +189,20 @@ namespace CharacterController.Runtime
                 if (_rigidbody2D.linearVelocity.y > _maxUpwardSpeed)
                 {
                     _rigidbody2D.linearVelocity = new Vector2(_rigidbody2D.linearVelocity.x, _maxUpwardSpeed);
+                    
                 }
+
+                if (_isFacingRight == false)
+                {
+                    _animationJettpackRight.SetActive(true);
+                    _animationJettpackLeft.SetActive(false);
+                }
+                if (_isFacingRight == true)
+                {
+                    _animationJettpackLeft.SetActive(true);
+                    _animationJettpackRight.SetActive(false);
+                }
+                
             }
             if (_actualJetPackTime > _maxJetPackTime)
             {
@@ -283,7 +301,8 @@ namespace CharacterController.Runtime
         [SerializeField] private GameObject _deathCanvas;
         [SerializeField] private Button retryButton;
         [SerializeField] private Button quitButton;
-
+        [FormerlySerializedAs("_animationJettpack")] [SerializeField] private GameObject _animationJettpackLeft;
+        [SerializeField] private GameObject _animationJettpackRight;
 
         #endregion
     }

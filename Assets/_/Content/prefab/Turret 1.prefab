@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6449279352437056943}
   - component: {fileID: 1840207140894589569}
   - component: {fileID: 3105386324294246113}
-  - component: {fileID: -3315135736632668546}
-  m_Layer: 0
+  - component: {fileID: 2036139343095138352}
+  m_Layer: 6
   m_Name: Turret 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,10 +28,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2820981765588623287}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.98, y: -2.09, z: 0}
-  m_LocalScale: {x: 0.89393, y: 1.251502, z: 0.89393}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.14475, y: -0.23, z: 0}
+  m_LocalScale: {x: 1.1130438, y: 1.1130438, z: 1.1130438}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3289425253771655593}
   - {fileID: 523881771383182170}
@@ -78,10 +78,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 680170109
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1259c3fc0c369f247890677b6b78cbe3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,7 +157,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.69, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -165,7 +165,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-3315135736632668546
+--- !u!114 &2036139343095138352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6040788383153539636}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -202,7 +202,7 @@ Transform:
   m_GameObject: {fileID: 4064304058789571627}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.504, y: -0.07, z: 0}
+  m_LocalPosition: {x: 2.72, y: -0.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 3289425253771655593}
   - component: {fileID: 663839978702383107}
   - component: {fileID: 303151681417012367}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,14 +234,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6480579132349256670}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.091597214, w: 0.99579614}
-  m_LocalPosition: {x: -0.63, y: 0.445, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.1875, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0, y: -0, z: -0.017337471, w: 0.99984974}
+  m_LocalPosition: {x: -0.41, y: 1.27, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6040788383153539636}
   m_Father: {fileID: 5820945993984870589}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -10.511}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.987}
 --- !u!212 &663839978702383107
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -283,12 +283,12 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_SortingLayerID: 680170109
+  m_SortingLayer: 1
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 7f21d413a47f70c408c90c948a295394, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480abff28b3a2a64d86f610882292b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 0
+  _range: 15
   _timeBetweenShots: 2
   _muzzle: {fileID: 4064304058789571627}
   _target: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 523881771383182170}
   - component: {fileID: 2219068685053078513}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ennemypool
   m_TagString: Untagged
   m_Icon: {fileID: 0}

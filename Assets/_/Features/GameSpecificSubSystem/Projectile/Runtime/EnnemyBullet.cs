@@ -1,13 +1,9 @@
 using UnityEngine;
-
-
 namespace Projectile.Runtime
 {
-    public class BulletScript : MonoBehaviour
+    public class EnnemyBullet : MonoBehaviour
     {
-
-       
-
+      
         // Update is called once per frame
         void FixedUpdate()
         {
@@ -21,26 +17,19 @@ namespace Projectile.Runtime
             
         }
 
-        public void Launch(bool isFacingRight)
+        public void Launch(Vector3 targetposition)
         {
-            Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
-            _rb.linearVelocity = direction * _speed ;
+            Vector2 direction= ((Vector2)(targetposition - transform.position)).normalized;
+            _rb.linearVelocity = direction * _speed;
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Ennemy") )
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Player") || collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                TurretHp controller = collider.gameObject.GetComponent<TurretHp>();
-                controller.TurretDeath();
-                gameObject.SetActive(false);
                 
-            }
-
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
                 gameObject.SetActive(false);
+               
             }
 
         }
@@ -49,5 +38,8 @@ namespace Projectile.Runtime
         [SerializeField] private float _speed;
         [SerializeField] private float _maxTimeAlive;
         private float _countTime;
+        [SerializeField] private GameObject _canon;
+        
     }
 }
+

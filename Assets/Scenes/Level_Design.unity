@@ -3685,6 +3685,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 7
   _jumpForce: 5
+  _maxJetPackTime: 0
+  _jetPackForce: 0
+  _jetPackSpeed: 0
+  _maxUpwardSpeed: 0
+  _muzzleRight: {fileID: 0}
+  _muzzleLeft: {fileID: 0}
+  _maxPistolCharge: 0
 --- !u!1001 &1254787257
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ namespace Projectile.Runtime
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-        _turretHp = 6;
+        _turretHp = 5;
         }
 
         // Update is called once per frame

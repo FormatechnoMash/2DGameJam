@@ -25,10 +25,6 @@ namespace CharacterController.Runtime
             _renderer = GetComponent<SpriteRenderer>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             if(_rigidbody2D == null) throw new MissingComponentException("Rigidbody2D not found");
-            _jetPackForce = 0.01f;
-            _jetPackSpeed = 3;
-            _maxUpwardSpeed = 8f;
-            _maxJetPackTime = 5;
             _maxPistolCharge = 7;
             _healthPoints = 4; 
             _jetpackSlider.maxValue = _maxJetPackTime;

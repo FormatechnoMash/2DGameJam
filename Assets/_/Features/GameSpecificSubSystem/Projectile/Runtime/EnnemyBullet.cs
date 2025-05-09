@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+
 namespace Projectile.Runtime
 {
     public class EnnemyBullet : MonoBehaviour

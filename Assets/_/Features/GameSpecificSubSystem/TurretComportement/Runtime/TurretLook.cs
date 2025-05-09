@@ -1,6 +1,5 @@
 using Projectile.Runtime;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace TurretComportement.Runtime
 {

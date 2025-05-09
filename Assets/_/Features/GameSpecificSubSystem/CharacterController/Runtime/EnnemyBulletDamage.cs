@@ -1,5 +1,4 @@
 using UnityEngine;
-using CharacterController.Runtime;
 
 namespace CharacterController.Runtime
 {

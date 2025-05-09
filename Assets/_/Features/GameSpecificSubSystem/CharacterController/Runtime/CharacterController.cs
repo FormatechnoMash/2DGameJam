@@ -1,8 +1,5 @@
 using Projectile.Runtime;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -344,8 +341,8 @@ namespace CharacterController.Runtime
         private float _pistolChargeDecreasing;
         private float _lastTimeShot;
         private int _healthPoints;
-        [SerializeField] private UnityEngine.UI.Slider _jetpackSlider;
-        [SerializeField] private UnityEngine.UI.Slider _pistolSlider;
+        [SerializeField] private Slider _jetpackSlider;
+        [SerializeField] private Slider _pistolSlider;
         private bool IsAlive = true;
         [SerializeField] private GameObject _deathCanvas;
         [SerializeField] private Button retryButton;

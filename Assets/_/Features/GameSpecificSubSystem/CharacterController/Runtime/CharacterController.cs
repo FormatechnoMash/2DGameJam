@@ -1,4 +1,5 @@
 using Projectile.Runtime;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,6 +11,15 @@ namespace CharacterController.Runtime
 {
     public class CharacterController : MonoBehaviour
     {
+        #region public
+
+        public Image healthBar;
+        public Sprite[] healthSprites;
+
+        
+        #endregion
+         
+         
          
         #region Unity APi4
         void Awake()
@@ -23,7 +33,7 @@ namespace CharacterController.Runtime
             _maxUpwardSpeed = 8f;
             _maxJetPackTime = 5;
             _maxPistolCharge = 7;
-            _healthPoints = 5; 
+            _healthPoints = 4; 
             _jetpackSlider.maxValue = _maxJetPackTime;
             _pistolSlider.maxValue = _maxPistolCharge;
             _deathCanvas.SetActive(false);
@@ -66,6 +76,7 @@ namespace CharacterController.Runtime
                 {
                     _animationJettpackLeft.SetActive(false);
                     _animationJettpackRight.SetActive(false);
+                    _audioSourceSound.Stop();
                 }
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
@@ -209,6 +220,7 @@ namespace CharacterController.Runtime
                     _animationJettpackLeft.SetActive(true);
                     _animationJettpackRight.SetActive(false);
                 }
+                _audioSourceSound.Play();
                 
             }
             if (_actualJetPackTime > _maxJetPackTime)
@@ -218,6 +230,7 @@ namespace CharacterController.Runtime
             
         }
 
+       
         public void ShootPistol()
         {
            /*⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣶⣦⡄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -254,6 +267,7 @@ namespace CharacterController.Runtime
                 if (bulletScript != null)
                 {
                     bulletScript.Launch(_isFacingRight);
+                    _audioSourceBlasterSound.PlayOneShot(_blasterSound);
                 }
                 
                 _actualPistolCharge += 1.5f;
@@ -265,6 +279,7 @@ namespace CharacterController.Runtime
         public void DecreaseHealthpoint()
         {
             _healthPoints--;
+            UpdateHealthPoints();
             if (transform.position.y <= -10)
             {
                 _healthPoints = 0;
@@ -277,7 +292,34 @@ namespace CharacterController.Runtime
 
         public void IncreaseHealthpoint()
         {
-            _healthPoints++;
+            if (_healthPoints < 4 && _healthPoints!=0)
+            {
+                _healthPoints++;
+                UpdateHealthPoints();
+            }
+            
+        }
+
+        public void UpdateHealthPoints()
+        {
+            if (_healthPoints == 4)
+            {
+                healthBar.sprite = healthSprites[0];
+            }
+            else if (_healthPoints == 3)
+            {
+                healthBar.sprite = healthSprites[1];
+                
+            }
+            else if (_healthPoints == 2)
+            {
+                healthBar.sprite = healthSprites[2];
+            }
+            else if (_healthPoints == 1)
+            {
+                healthBar.sprite = healthSprites[3];
+            }
+            
         }
         #endregion
         
@@ -310,7 +352,10 @@ namespace CharacterController.Runtime
         [SerializeField] private Button quitButton;
         [FormerlySerializedAs("_animationJettpack")] [SerializeField] private GameObject _animationJettpackLeft;
         [SerializeField] private GameObject _animationJettpackRight;
-
+        [SerializeField] AudioSource _audioSourceBlasterSound;
+        [SerializeField] private AudioSource _audioSourceSound;
+        //[SerializeField] private AudioClip _jettpackSound;
+        [SerializeField] private AudioClip _blasterSound;
 
         #endregion
     }
